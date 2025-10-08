@@ -1,8 +1,0 @@
-{
-  "build": {
-    "builder": "php"
-  },
-  "run": {
-    "command": "php -S 0.0.0.0:$PORT -t ."
-  }
-}
