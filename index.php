@@ -1,20 +1,5 @@
 <?php
-// Mostrar errores (solo para diagnóstico en Railway)
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Intentar cargar la configuración, pero no morir si falla
-$conexion_exitosa = false;
-try {
-    require_once __DIR__ . "/config.php";
-    if ($conn && !$conn->connect_error) {
-        $conexion_exitosa = true;
-    }
-} catch (Exception $e) {
-    // No detener la página si falla la BD
-    $error_bd = $e->getMessage();
-}
+require_once __DIR__ . "/config.php";
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +33,7 @@ try {
         <h1 class="display-5 fw-bold text-primary">📚 Dashboard - Práctica 2</h1>
         <p class="lead text-muted">Gestión de Cursos y Docentes</p>
     </div>
+
 
     <!-- Tus tarjetas aquí (sin cambios) -->
     <div class="row g-4 justify-content-center">
