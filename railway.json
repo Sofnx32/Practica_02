@@ -1,10 +1,8 @@
 {
   "build": {
-    "builder": "None"
+    "builder": "php"
   },
-  "deploy": {
-    "startCommand": "php -S 0.0.0.0:$PORT -t .",
-    "healthcheckPath": "/",
-    "healthcheckTimeout": 100
+  "run": {
+    "command": "php -S 0.0.0.0:$PORT -t ."
   }
 }
