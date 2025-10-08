@@ -1,0 +1,8 @@
+{
+  "build": {
+    "builder": "nixpacks"
+  },
+  "run": {
+    "command": "php -S 0.0.0.0:$PORT"
+  }
+}
