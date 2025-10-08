@@ -1,5 +1,20 @@
 <?php
-require_once __DIR__ . "/config.php";
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+$conexion_exitosa = false;
+try {
+    require_once __DIR__ . "/config.php";
+    if ($conn && !$conn->connect_error) {
+        $conexion_exitosa = true;
+    }
+} catch (Exception $e) {
+    // No detener la página si falla la BD
+    $error_bd = $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,37 +23,34 @@ require_once __DIR__ . "/config.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Práctica 2</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Favicon opcional -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
     <style>
-        body {
-            background-color: #6f93b8ff;
-        }
-        .card {
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
-        .btn-dashboard {
-            padding: 1.25rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
+        body { background-color: #6f93b8ff; }
+        .card { transition: transform 0.2s, box-shadow 0.2s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn-dashboard { padding: 1.25rem; font-size: 1.1rem; font-weight: 600; }
     </style>
 </head>
 <body>
 <div class="container mt-5">
+    <?php if (isset($error_bd) || !$conexion_exitosa): ?>
+        <div class="alert alert-danger text-center">
+            <h4>⚠️ Advertencia</h4>
+            <p>No se pudo conectar a la base de datos. La app se muestra en modo de solo lectura.</p>
+            <?php if (isset($error_bd)): ?>
+                <small>Error: <?= htmlspecialchars($error_bd) ?></small>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
     <div class="text-center mb-5">
         <h1 class="display-5 fw-bold text-primary">📚 Dashboard - Práctica 2</h1>
         <p class="lead text-muted">Gestión de Cursos y Docentes</p>
     </div>
 
+
     <div class="row g-4 justify-content-center">
-      
         <div class="col-md-5">
             <div class="card border-primary h-100 shadow-sm">
                 <div class="card-body text-center">
@@ -56,7 +68,6 @@ require_once __DIR__ . "/config.php";
             </div>
         </div>
 
-       
         <div class="col-md-5">
             <div class="card border-success h-100 shadow-sm">
                 <div class="card-body text-center">
@@ -79,7 +90,6 @@ require_once __DIR__ . "/config.php";
         <small>Práctica 2 - Sistema de Gestión Académica</small>
     </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
